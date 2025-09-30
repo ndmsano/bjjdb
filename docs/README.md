@@ -1,3 +1,4 @@
+<!-- Version: 0.001 (2025-09-30) -->
 Before you start working on this project, please notice the following:
 I hope that your BJJ journey will improve and you can get a lot of quality info fast, and at the same time help those fantastic guys that put out quality content for free for us all. Please be respectful to all, that are bidrager to this project.  
 This is a con amore project, but I hope that I can make some money at some point, if we get a lot of success with this.

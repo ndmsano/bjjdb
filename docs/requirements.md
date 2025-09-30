@@ -4,6 +4,14 @@ Dato            version
 2025 09 30 |    0.002
 2025 09 30 |    0.003
 2025 09 30 |    0.004
+2025 09 30 |    0.005
+2025 09 30 |    0.006
+2025 09 30 |    0.007
+2025 09 30 |    0.008
+2025 09 30 |    0.009
+2025 09 30 |    0.010
+2025 09 30 |    0.011
+2025 09 30 |    0.012
 
 **Senest opdateret:** 2025-09-30
 
@@ -31,15 +39,18 @@ Forside:
 Forsiden ser ud som youtube med søgefelt for oven. En "opret" knap. Samt profilbillede yderst oppe i højre hjørne
 menubar med knapperne (Alle, shorts, ikke set, er set, seneste uploads, Filtre)
 
-Resultatside:
-Efter søgning på fx "Omoplata" vises videoer med relevans til omoplata.
-Resultaterne vises på 2 kolonner, i første kolonne vises thumbnail og i anden kolonne vises info omkring videoen: instruktør, hvornår videoen er uploaded, navn på teknik, titel på video, hvor mange visninger på fx youtube, egen kommentar osv.
+
 
 Kravspecifikation
 
 Krav 1: Versionsnummeret på filen skal opskrives hver gang der laves en ændring i koden/teksten. Datoen i tabellen og feltet "Senest opdateret" skal altid være dags dato. Når dokumentet opdateres, skal både dato og versionsnummer tilføjes/justeres samme dag. For minimale ændringer opskrives fx fra 0.001 --> 0.002; ved store ændringer opskrives fra 1.000 --> 2.000.
 
-Krav 2: For hvert ændring i koden, så lav en git add. 
+Krav 2: 
 
-## Test
-....................................................................................................
+Krav 3: index.ejs
+Design index.ejs præcis om google.com. udelad dog header og footer.
+Istedet for Google skal der stå med flotte effektfulde bogstaver BJJDB, brug gerne farverne hvid, blå, lilla, brun og sort som repræsenterer bæltefarver i bjj.
+
+Ser ud som youtube.com efter en søgning fx: https://www.youtube.com/results?search_query=bjj
+Efter søgning på fx "Omoplata" vises videoer med relevans til omoplata.
+Resultaterne vises på 2 kolonner, i første kolonne vises thumbnail og i anden kolonne vises info omkring videoen: instruktør, hvornår videoen er uploaded, navn på teknik, titel på video, hvor mange visninger på fx youtube, egen kommentar osv.

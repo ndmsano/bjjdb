@@ -1,66 +1,271 @@
-<%- include("partials/header.ejs") %>
+<%# Version: 0.012 (2025-09-30) %>
+<!DOCTYPE html>
+<html lang="da">
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BJJDB</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css">
+  <link rel="stylesheet" href="/styles/layout.css">
+  <link rel="stylesheet" href="/styles/content.css">
   <style>
-    #searchInput {
-      width: 280px;
-      padding: 10px 12px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-bottom: 15px;
+    :root {
+      color-scheme: light dark;
     }
 
-    #searchBtn {
-      padding: 10px 22px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 22px;
-      background: linear-gradient(135deg, #3586ff 0%, #36aaff 100%);
-      color: #fff;
-      cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      transition: background 0.2s;
+    * {
+      box-sizing: border-box;
     }
 
-    #searchBtn:hover {
-      background: linear-gradient(135deg, #2a6fd6 0%, #3586ff 100%);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    body {
+      margin: 0;
+      font-family: "Product Sans", "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: radial-gradient(circle at top, #fefefe 0%, #f3f7ff 40%, #dde8ff 100%);
     }
 
-    #version {
-      position: absolute;
-      bottom: 10px;
-      font-size: 0.75rem;
-      color: #777;
+    .page {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 16px 120px;
     }
-  </style>
-</head>
-<body>
-  <br>
-  <input id="searchInput" type="text" placeholder="Søg efter video" />
-  <button id="searchBtn">Search</button>
-  <!-- Versionsnummer +0.0001 → i0.0002 -->
-  <small id="version">Version i0.0002</small>
 
-  <script>
-    const input = document.getElementById("searchInput");
-    const btn = document.getElementById("searchBtn");
+    .logo {
+      display: flex;
+      gap: 4px;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 700;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      text-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
 
-    function doSearch() {
-      const q = encodeURIComponent(input.value.trim());
-      if (q) {
-        window.location.href = `results.html?q=${q}`;
+    .logo span {
+      display: inline-block;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .logo span:nth-child(1) {
+      color: #ffffff;
+      animation-delay: 0s;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .logo span:nth-child(2) {
+      color: #1f6bff;
+      animation-delay: 0.1s;
+    }
+
+    .logo span:nth-child(3) {
+      color: #6633cc;
+      animation-delay: 0.2s;
+    }
+
+    .logo span:nth-child(4) {
+      color: #8a5520;
+      animation-delay: 0.3s;
+    }
+
+    .logo span:nth-child(5) {
+      color: #1a1a1a;
+      animation-delay: 0.4s;
+    }
+
+    .logo span:nth-child(6) {
+      color: #ff3b30;
+      animation-delay: 0.5s;
+      text-shadow: 0 0 14px rgba(255, 59, 48, 0.45);
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      25% {
+        transform: translateY(-4px);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+
+      75% {
+        transform: translateY(-2px);
       }
     }
 
-    btn.addEventListener("click", doSearch);
+    .search {
+      width: min(600px, 95vw);
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 999px;
+      box-shadow: 0 8px 30px rgba(10, 50, 130, 0.18);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
+    .search:focus-within {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(10, 50, 130, 0.22);
+    }
+
+    .search input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 1.1rem;
+      padding: 6px 0;
+      color: #202124;
+      outline: none;
+    }
+
+    .search input::placeholder {
+      color: #8a9099;
+    }
+
+    .search button {
+      width: auto;
+      font-size: 1rem;
+      padding: 6px 16px;
+      border: none;
+      background: linear-gradient(135deg, #0056d6, #5b2ca2);
+      color: #fff;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .search button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(41, 90, 220, 0.35);
+    }
+
+    .actions {
+      margin-top: 28px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .actions button {
+      border: none;
+      background: rgba(255, 255, 255, 0.85);
+      color: #3c4043;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(32, 33, 36, 0.12);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .actions button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(32, 33, 36, 0.18);
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px 16px;
+      font-size: 0.85rem;
+      color: #5f6368;
+    }
+
+    .version {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: #8a9099;
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        letter-spacing: -1px;
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .search button {
+        padding: 8px 14px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="logo" aria-label="BJJDB logo">
+      <span>B</span>
+      <span>J</span>
+      <span>J</span>
+      <span>D</span>
+      <span>B</span>
+      <span>+</span>
+    </div>
+
+    <form class="search" action="/results" method="get">
+      <input id="searchInput" name="q" type="text" aria-label="Søg efter BJJ video" placeholder="Søg efter video" autocomplete="off" />
+      <button type="submit">Søg</button>
+    </form>
+
+    <!--
+    <div class="actions">
+      <button type="button" onclick="doSearch()">BJJDB Søgning</button>
+      <button type="button" onclick="lucky()">Jeg føler mig heldig</button>
+    </div>
+    -->
+  </div>
+
+  <%- include("partials/footer.ejs") %>
+
+  <script>
+    const input = document.getElementById("searchInput");
+
+    function submitWithQuery(query) {
+      if (!query) {
+        input.focus();
+        return;
+      }
+      const url = `/results?q=${encodeURIComponent(query)}`;
+      window.location.href = url;
+    }
+
+    function doSearch() {
+      submitWithQuery(input.value.trim());
+    }
+
+    function lucky() {
+      const randomTerms = [
+        "guard retention",
+        "berimbolo",
+        "heel hook",
+        "kimura",
+        "dagger pass",
+        "wrestling switch",
+        "leg pummeling"
+      ];
+      const term = randomTerms[Math.floor(Math.random() * randomTerms.length)];
+      submitWithQuery(term);
+    }
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
         doSearch();
       }
     });
   </script>
+</body>
 
-  <%- include("partials/footer.ejs") %>
+</html>
