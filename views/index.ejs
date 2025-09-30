@@ -1,0 +1,66 @@
+<%- include("partials/header.ejs") %>
+
+  <style>
+    #searchInput {
+      width: 280px;
+      padding: 10px 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+
+    #searchBtn {
+      padding: 10px 22px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #3586ff 0%, #36aaff 100%);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: background 0.2s;
+    }
+
+    #searchBtn:hover {
+      background: linear-gradient(135deg, #2a6fd6 0%, #3586ff 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    #version {
+      position: absolute;
+      bottom: 10px;
+      font-size: 0.75rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <br>
+  <input id="searchInput" type="text" placeholder="Søg efter video" />
+  <button id="searchBtn">Search</button>
+  <!-- Versionsnummer +0.0001 → i0.0002 -->
+  <small id="version">Version i0.0002</small>
+
+  <script>
+    const input = document.getElementById("searchInput");
+    const btn = document.getElementById("searchBtn");
+
+    function doSearch() {
+      const q = encodeURIComponent(input.value.trim());
+      if (q) {
+        window.location.href = `results.html?q=${q}`;
+      }
+    }
+
+    btn.addEventListener("click", doSearch);
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        doSearch();
+      }
+    });
+  </script>
+
+  <%- include("partials/footer.ejs") %>

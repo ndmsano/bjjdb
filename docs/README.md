@@ -1,0 +1,5 @@
+Before you start working on this project, please notice the following:
+I hope that your BJJ journey will improve and you can get a lot of quality info fast, and at the same time help those fantastic guys that put out quality content for free for us all. Please be respectful to all, that are bidrager to this project.  
+This is a con amore project, but I hope that I can make some money at some point, if we get a lot of success with this.
+The code is under GNU public license, so you can use the code as you wish, just give us credit if you use it
+BJJ is a marathon, and so is this project. I hope that it will help a lot of people, but then again, it might not. Help me with this project if you think its fun and can help a lot of people with their bjj learning. If you have other agendas (making money, bully og downgrading some one, or any other malicious intent) please stay away.  
