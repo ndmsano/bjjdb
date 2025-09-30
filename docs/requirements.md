@@ -2,6 +2,8 @@
 Dato            version   
 2025 09 30 |    0.001
 2025 09 30 |    0.002
+2025 09 30 |    0.003
+2025 09 30 |    0.004
 
 **Senest opdateret:** 2025-09-30
 
@@ -35,7 +37,9 @@ Resultaterne vises på 2 kolonner, i første kolonne vises thumbnail og i anden 
 
 Kravspecifikation
 
-Krav 1: Versionsnummeret på filen skal opskrives hver gang der laves en ændring i koden/teksten. for minimale ændringer opskrives fx fra 0.001 --> 0.002 ved store ændringer opskrives fra 1.000 --> 2.000
+Krav 1: Versionsnummeret på filen skal opskrives hver gang der laves en ændring i koden/teksten. Datoen i tabellen og feltet "Senest opdateret" skal altid være dags dato. Når dokumentet opdateres, skal både dato og versionsnummer tilføjes/justeres samme dag. For minimale ændringer opskrives fx fra 0.001 --> 0.002; ved store ændringer opskrives fra 1.000 --> 2.000.
 
-Krav 2: 
+Krav 2: For hvert ændring i koden, så lav en git add. 
 
+## Test
+....................................................................................................
