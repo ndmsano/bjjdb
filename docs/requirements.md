@@ -52,6 +52,10 @@ Design index.ejs præcis om google.com. udelad dog header og footer.
 Istedet for Google skal der stå med flotte effektfulde bogstaver BJJDB, brug gerne farverne hvid, blå, lilla, brun og sort som repræsenterer bæltefarver i bjj.
 
 Krav 4: Resultatside
+PC/stor skærm:
 Ser ud som youtube.com efter en søgning fx: https://www.youtube.com/results?search_query=bjj
 Efter søgning på fx "Omoplata" vises videoer med relevans til omoplata.
 Resultaterne vises på 2 kolonner, i første kolonne vises thumbnail og i anden kolonne vises info omkring videoen: instruktør, hvornår videoen er uploaded, navn på teknik, titel på video, hvor mange visninger på fx youtube, egen kommentar osv.
+Mobilskærm:
+Såfremt at brugeren tilgår siden fra et mobildevice med lav opløsning, skal layoutet justeres hertil, således at der kun er 1 kolonne, og thumbnail vises først, herunder info omkring videoen.
+
