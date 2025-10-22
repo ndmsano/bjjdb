@@ -1,0 +1,194 @@
+<%# Version: 0.001 (2025-09-30) %>
+<!--<p>You searched for: "<%= query %>"</p>-->
+
+
+<!DOCTYPE html>
+<!-- Results page for BJJ Video Search (updated to r0.0030) -->
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <title>BJJ Video Search – Resultater</title>
+  <style>
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f7f7f7;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+    h1{font-size:1.8rem;margin:40px 0 10px}
+    #results{width:94%;max-width:1000px}
+    .card{background:#fff;margin-bottom:20px;padding:22px 28px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.1);line-height:1.45}
+    .field{display:inline-flex;align-items:baseline;margin:0 12px 6px 0;gap:4px}
+    .field label{font-weight:600;margin-right:6px;color:#2e3a46}
+    .field input{padding:4px 6px;font-size:.95rem;border:1px solid #ccc;border-radius:4px}
+    .indent{margin-left:16px}
+    .back-link{margin-top:30px;font-size:.9rem}
+    #version{margin-top:auto;margin-bottom:10px;font-size:.75rem;color:#777}
+    .card .actions{display:flex;justify-content:flex-end;margin-top:10px}
+    .card .actions button{background-color:#007bff;color:white;border:none;padding:6px 14px;border-radius:4px;cursor:pointer}
+    .card .actions button:hover{background-color:#0056b3}
+  .card .actions button:nth-child(2){background-color:#dc3545}
+.card .actions button:nth-child(2):hover{background-color:#a71d2a}
+.deleted {
+  border: 2px solid #dc3545;
+  opacity: 0.85;
+}
+</style>
+</head>
+<body>
+  <h1>Resultater</h1>
+  <div id="results">Indlæser...</div>
+  <a class="back-link" href="index.html">← Tilbage til søgning</a>
+  <small id="version">r0.0030</small>
+
+  <script>
+    const container=document.getElementById('results');
+    const q=new URLSearchParams(window.location.search).get('q')?.trim()||'';
+    const endpoint=`https://x8ki-letl-twmt.n7.xano.io/api:GRaMf1_p/glossary_fuzzysearch?q=${encodeURIComponent(q)}`;
+
+    fetch(endpoint,{headers:{Accept:'application/json'}})
+      .then(r=>r.json())
+      .then(data=>{
+        container.innerHTML='';
+        const items=Array.isArray(data)?data:[data];
+        if(!items.length){container.textContent='Ingen resultater fundet.';return;}
+        items.forEach(it => container.appendChild(buildCard(it)));
+      })
+      .catch(()=>container.textContent='Fejl under hentning af data.');
+
+    function buildCard(obj){
+  const isDeleted = !!obj.deleted_at;
+      const card=document.createElement('div');
+  card.className = isDeleted ? 'card deleted' : 'card';
+      if(obj.Name||obj.title){
+        const h2=document.createElement('h2');
+        h2.textContent=obj.Name||obj.title;
+        card.appendChild(h2);
+      }  
+      const rootFragment = renderRoot(obj);
+      card.appendChild(rootFragment);
+
+      const actions=document.createElement('div');
+      actions.className='actions';
+      const btn=document.createElement('button');
+      btn.textContent='Update';
+      btn.addEventListener('click',()=>{
+        const inputs=card.querySelectorAll('input');
+        const data={};
+        inputs.forEach(input => {
+  const key = input.previousSibling.textContent.replace(':','');
+  const value = input.value.trim();
+  if (value !== '') {
+    data[key] = value;
+  }
+});
+        fetch(`https://x8ki-letl-twmt.n7.xano.io/api:GRaMf1_p/glossary/${data.id}`,{
+          method:'PUT',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify(data)
+        })
+        .then(r=>r.json())
+        .then(updated=>{
+          card.innerHTML='';
+          if(updated.Name||updated.title){
+            const h2=document.createElement('h2');
+            h2.textContent=updated.Name||updated.title;
+            card.appendChild(h2);
+          }
+          card.appendChild(renderRoot(updated));
+          card.appendChild(actions);
+          alert('Opdateret!');
+        })
+        .catch(()=>alert('Fejl ved opdatering.'));
+      });
+      actions.appendChild(btn);
+
+      // Tilføj Delete-knap
+      const delBtn = document.createElement('button');
+      delBtn.textContent = 'Delete';
+      delBtn.style.marginLeft = '10px';
+      delBtn.style.backgroundColor = '#dc3545';
+      delBtn.addEventListener('click', () => {
+        if (confirm('Er du sikker på, at du vil slette dette opslag?')) {
+          const inputs = card.querySelectorAll('input');
+          const data = {};
+          inputs.forEach(input => {
+            const key = input.previousSibling.textContent.replace(':','');
+            const value = input.value.trim();
+            if (value !== '') {
+              data[key] = value;
+            }
+          });
+          data.deleted_at = new Date().toISOString();
+
+          fetch(`https://x8ki-letl-twmt.n7.xano.io/api:GRaMf1_p/glossary/${obj.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          })
+          .then(() => {
+            card.remove();
+            alert('Markeret som slettet!');
+          })
+          .catch(() => alert('Fejl ved sletning.'));
+        }
+      });
+      actions.appendChild(delBtn);
+      card.appendChild(actions);
+
+      return card;
+    }
+
+    const ORDER=['id','id_name','created_at','Name','name_clean','Language','Synonyms'];
+
+    function renderRoot(obj){
+      const frag=document.createDocumentFragment();
+      const usedLower=new Set();
+
+      ORDER.forEach(key=>{
+        if(key==='Language') frag.appendChild(document.createElement('br'));
+        const [actualKey,val]=lookup(obj,key);
+        renderValue(key,val,0,frag);
+        usedLower.add(actualKey.toLowerCase());
+        if(key==='created_at') frag.appendChild(document.createElement('br'));
+      });
+
+      Object.entries(obj).forEach(([k,v])=>{
+        if(!usedLower.has(k.toLowerCase())) renderValue(k,v,0,frag);
+      });
+      return frag;
+    }
+
+    function lookup(o,key){
+      if(key in o) return [key,o[key]];
+      const lc=key.toLowerCase();
+      for(const k in o){if(k.toLowerCase()===lc) return [k,o[k]];}
+      if(key==='Synonyms') return [key,[]];
+      return [key,''];
+    }
+
+    function renderValue(label,val,indent,frag){
+      if(isPrimitive(val)){
+        frag.appendChild(makeInputField(label,val,indent));
+      }else if(Array.isArray(val)){
+        if(val.length===0){frag.appendChild(makeInputField(label,'',indent));}
+        else{
+          frag.appendChild(makeLine(label+':',indent));
+          val.forEach((item,i)=>renderValue(`${label}[${i}]`,item,indent+1,frag));
+        }
+      }else if(val&&typeof val==='object'){
+        frag.appendChild(makeLine(label+':',indent));
+        Object.entries(val).forEach(([k,v])=>renderValue(k,v,indent+1,frag));
+      }
+    }
+
+    const widths={id:4,id_name:5,created_at:14,Name:20,name_clean:20,Language:12,Synonyms:25};
+    function makeInputField(key,value,indent){
+      const wrap=document.createElement('div');wrap.className='field indent';wrap.style.marginLeft=indent*16+'px';
+      const lbl=document.createElement('label');lbl.textContent=key+':';wrap.appendChild(lbl);
+      const inp=document.createElement('input');inp.type='text';inp.value=value==null?'':value;wrap.appendChild(inp);
+      const w=widths[key]||20;
+      inp.style.width=w+'ch';inp.style.flex='0 0 '+w+'ch';
+      return wrap;
+    }
+
+    function makeLine(text,indent){const d=document.createElement('div');d.className='indent';d.style.marginLeft=indent*16+'px';d.textContent=text;return d;}
+    const isPrimitive=v=>v===null||['string','number','boolean'].includes(typeof v);
+  </script>
+</body>
+</html>
