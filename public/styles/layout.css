@@ -11,7 +11,7 @@ i {
   margin-right: 10px;
 }
 
-.yt-header {
+.header {
   position: sticky;
   top: 0;
   z-index: 50;
@@ -25,25 +25,25 @@ i {
   border-bottom: 1px solid rgba(148, 163, 184, 0.25);
 }
 
-.yt-header__left,
-.yt-header__center,
-.yt-header__right {
+.header__left,
+.header__center,
+.header__right {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.yt-header__left {
+.header__left {
   min-width: 180px;
 }
 
-.yt-header__logo img {
+.header__logo img {
   height: 24px;
   width: auto;
   display: block;
 }
 
-.yt-header__icon {
+.header__icon {
   background: none;
   border: none;
   color: #0f172a;
@@ -58,17 +58,17 @@ i {
   transition: background 0.2s ease;
 }
 
-.yt-header__icon:hover {
+.header__icon:hover {
   background: rgba(15, 23, 42, 0.08);
 }
 
-.yt-header__center {
+.header__center {
   flex: 1;
   justify-content: center;
   gap: 10px;
 }
 
-.yt-search {
+.search {
   display: flex;
   align-items: stretch;
   width: min(500px, 55vw);
@@ -76,9 +76,10 @@ i {
   border: 1px solid rgba(148, 163, 184, 0.35);
   border-radius: 999px;
   overflow: hidden;
+  margin-top: 0px;
 }
 
-.yt-search input {
+.search input {
   flex: 1;
   border: none;
   background: transparent;
@@ -88,11 +89,11 @@ i {
   outline: none;
 }
 
-.yt-search input::placeholder {
+.search input::placeholder {
   color: #94a3b8;
 }
 
-.yt-search__submit {
+.search__submit {
   border: none;
   background: none;
   color: none;
@@ -102,26 +103,26 @@ i {
   transition: background 0.2s ease;
 }
 
-.yt-search__submit:hover {
+.search__submit:hover {
   background: rgba(148, 163, 184, 0.35);
 }
 
-.yt-header__mic {
+.header__mic {
   background: rgba(15, 23, 42, 0.06);
   color: #0f172a;
 }
 
-.yt-header__mic:hover {
+.header__mic:hover {
   background: rgba(15, 23, 42, 0.12);
 }
 
-.yt-header__right {
+.header__right {
   gap: 12px;
   min-width: 150px;
   justify-content: flex-end;
 }
 
-.yt-header__avatar {
+.header__avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -135,38 +136,38 @@ i {
 }
 
 @media (max-width: 900px) {
-  .yt-header__center {
+  .header__center {
     gap: 8px;
   }
 
-  .yt-search {
+  .search {
     width: min(50px, 70vw);
   }
 
-  .yt-header__right {
+  .header__right {
     gap: 8px;
   }
 }
 
 @media (max-width: 640px) {
-  .yt-header {
+  .header {
     gap: 8px;
     padding: 0 12px;
   }
 
-  .yt-header__left span {
+  .header__left span {
     display: none;
   }
 
-  .yt-search {
+  .search {
     width: 100%;
   }
 
-  .yt-header__center {
+  .header__center {
     flex: 1;
   }
 
-  .yt-header__right {
+  .header__right {
     min-width: auto;
   }
 }
