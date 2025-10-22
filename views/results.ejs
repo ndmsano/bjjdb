@@ -1,0 +1,311 @@
+<%# Version: 0.001 (2025-09-30) %>
+<%- include("partials/header.ejs", {
+  pageTitle: "Søgeresultater",
+  bodyClass: "results-page"
+}) %>
+
+<style>
+  .results-wrapper {
+    padding: 24px 0 56px;
+    width: min(960px, 94vw);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .results-intro {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  .results-intro h1 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    margin: 0;
+  }
+
+  .results-count {
+    color: #6b7280;
+    font-size: 0.95rem;
+  }
+
+  .results-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .result-card {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 16px;
+    padding: 12px;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .result-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 48px rgba(15, 23, 42, 0.12);
+  }
+
+  .result-card__thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0f172a;
+  }
+
+  .result-card__thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+  }
+
+  .result-card:hover .result-card__thumb img {
+    transform: scale(1.05);
+  }
+
+  .result-card__duration {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(15, 23, 42, 0.85);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .result-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .result-card__title {
+    margin: 0;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    line-height: 1.35;
+  }
+
+  .result-card__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .result-card__title a:hover {
+    color: #2563eb;
+  }
+
+  .result-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+
+  .result-card__description {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.5;
+  }
+
+  .result-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .result-card__tag {
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(37, 99, 235, 0.12);
+    color: #1d4ed8;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  .results-empty {
+    border-radius: 14px;
+    padding: 28px;
+    background: rgba(226, 232, 240, 0.35);
+    color: #475569;
+    text-align: center;
+  }
+
+  @media (max-width: 720px) {
+    .result-card {
+      grid-template-columns: 1fr;
+      padding: 12px;
+    }
+
+    .result-card__thumb {
+      aspect-ratio: 16/9;
+    }
+
+    .results-wrapper {
+      width: 100%;
+    }
+  }
+</style>
+
+<section class="results-wrapper" data-role="wrapper">
+  <div class="results-intro">
+    <div>
+      <h1>Søgeresultater</h1>
+      <% if (query) { %>
+        <p class="results-query">for "<%= query %>"</p>
+      <% } %>
+    </div>
+    <span class="results-count" data-role="count"></span>
+  </div>
+
+  <div class="results-empty" data-role="empty" hidden>
+    Ingen resultater at vise endnu. Prøv en anden søgning.
+  </div>
+
+  <div class="results-grid" data-role="grid"></div>
+</section>
+
+<script>
+  (function () {
+    const query = <%- JSON.stringify(query || "") %>;
+    const countEl = document.querySelector("[data-role=count]");
+    const gridEl = document.querySelector("[data-role=grid]");
+    const emptyEl = document.querySelector("[data-role=empty]");
+
+    const endpoint = `https://x8ki-letl-twmt.n7.xano.io/api:GRaMf1_p/glossary_fuzzysearch?q=${encodeURIComponent(query)}`;
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function formatDate(timestamp) {
+      if (!timestamp) return "";
+      const date = new Date(Number(timestamp));
+      if (Number.isNaN(date.getTime())) return "";
+      return date.toLocaleDateString("da-DK", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      });
+    }
+
+    function extractYoutubeId(link) {
+      if (!link) return "";
+      try {
+        const url = new URL(link);
+        if (url.searchParams.get("v")) {
+          return url.searchParams.get("v");
+        }
+        const match = url.pathname.match(/\/embed\/([\w-]{11})/);
+        if (match) return match[1];
+        const short = url.pathname.match(/\/([\w-]{11})$/);
+        if (short) return short[1];
+      } catch (err) {
+        return "";
+      }
+      return "";
+    }
+
+    function buildCard(entry) {
+      const id = entry.id ?? "";
+      const title = escapeHtml(entry.Name || entry.Name_clean || "Uden titel");
+      const language = entry.Language ? `🌐 ${escapeHtml(entry.Language)}` : "";
+      const type = entry.Glossary_Type ? `🏷️ ${escapeHtml(entry.Glossary_Type)}` : "";
+      const created = formatDate(entry.created_at);
+      const createdLabel = created ? `🕒 ${created}` : "";
+      const comment = entry.Comments ? escapeHtml(entry.Comments) : "";
+      const synonyms = Array.isArray(entry.Synonyms) ? entry.Synonyms.slice(0, 6) : [];
+      const youtubeId = extractYoutubeId(entry.Link);
+      const thumbnailUrl = youtubeId
+        ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`
+        : "https://placehold.co/320x180?text=BJJ";
+      const videoUrl = entry.Link || (youtubeId ? `https://www.youtube.com/watch?v=${youtubeId}` : "#");
+
+      const tagsHtml = synonyms
+        .map((tag) => `<span class="result-card__tag">#${escapeHtml(tag)}</span>`)
+        .join("\n");
+
+      const metaItems = [language, type, createdLabel].filter(Boolean).join("");
+
+      return `
+        <article class="result-card" data-id="${escapeHtml(id)}">
+          <div class="result-card__thumb">
+            <a href="${escapeHtml(videoUrl)}" target="_blank" rel="noopener">
+              <img src="${escapeHtml(thumbnailUrl)}" alt="Thumbnail for ${title}" loading="lazy" />
+            </a>
+          </div>
+
+          <div class="result-card__body">
+            <h2 class="result-card__title">
+              <a href="${escapeHtml(videoUrl)}" target="_blank" rel="noopener">${title}</a>
+            </h2>
+
+            <div class="result-card__meta">${metaItems || ""}</div>
+
+            ${comment ? `<p class="result-card__description">${comment}</p>` : ""}
+
+            ${tagsHtml ? `<div class="result-card__tags">${tagsHtml}</div>` : ""}
+          </div>
+        </article>
+      `;
+    }
+
+    function renderResults(items) {
+      if (!items || !items.length) {
+        gridEl.innerHTML = "";
+        emptyEl.hidden = false;
+        countEl.textContent = "";
+        return;
+      }
+
+      emptyEl.hidden = true;
+      countEl.textContent = `${items.length} opslag fundet`;
+      gridEl.innerHTML = items.map(buildCard).join("\n");
+    }
+
+    function showError() {
+      gridEl.innerHTML = "";
+      emptyEl.hidden = false;
+      emptyEl.textContent = "Der opstod en fejl ved hentning af resultater.";
+      countEl.textContent = "";
+    }
+
+    gridEl.innerHTML = "<div class=\"results-empty\">Henter resultater...</div>";
+
+    fetch(endpoint, { headers: { Accept: "application/json" } })
+      .then((response) => {
+        if (!response.ok) throw new Error("Network response was not ok");
+        return response.json();
+      })
+      .then((payload) => {
+        const items = Array.isArray(payload) ? payload : payload ? [payload] : [];
+        renderResults(items);
+      })
+      .catch(() => showError());
+  })();
+</script>
+
+<%- include("partials/footer.ejs") %>

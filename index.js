@@ -17,7 +17,7 @@ app.get("/results", (req, res) => {
   const query = req.query.q;
   console.log("Search query:", req.query.q);
   console.log("body:", req.body);
-  res.render("resultsOLD.ejs", { query });
+  res.render("results.ejs", { query });
 });
 
 app.get("/contact", (req, res) => {

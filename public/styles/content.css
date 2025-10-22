@@ -232,3 +232,50 @@ textarea {
     font-size: 0.9rem;
   }
 }
+
+
+.header-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  padding: 8px 14px;
+  box-shadow: 0 8px 24px rgba(10, 50, 130, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.header-search:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(10, 50, 130, 0.22);
+}
+
+.header-search input {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  padding: 4px 0;
+  color: #202124;
+  outline: none;
+}
+
+.header-search input::placeholder {
+  color: #8a9099;
+}
+
+.header-search button {
+  border: none;
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #0056d6, #5b2ca2);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.header-search button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(41, 90, 220, 0.35);
+}
