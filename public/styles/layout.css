@@ -95,16 +95,23 @@ i {
 
 .search__submit {
   border: none;
-  background: none;
-  color: none;
-  padding: 0 18px;
+  background: rgba(148, 163, 184, 0.15);
+  color: #0f172a;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s ease;
+  border-radius: 999px;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .search__submit:hover {
-  background: rgba(148, 163, 184, 0.35);
+  background: rgba(37, 99, 235, 0.18);
+  transform: scale(1.05);
 }
 
 .header__mic {
@@ -146,6 +153,24 @@ i {
 
   .header__right {
     gap: 8px;
+  }
+}
+
+@media (max-width: 900px) and (min-width: 641px) {
+  .search__submit {
+    border: none;
+    background: rgba(148, 163, 184, 0.15);
+    color: #0f172a;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: background 0.2s ease, transform 0.2s ease;
   }
 }
 
@@ -308,4 +333,279 @@ footer .wave#wave4 {
     -webkit-mask-position: 1000px 0;
     mask-position: 1000px 0;
   }
+}
+
+/* --- Merged from content.css --- */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
+
+header,
+footer {
+  flex: 0 0 auto;
+}
+
+main {
+  text-align: center;
+  padding: 5vmin;
+  flex: 1 0 auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+p {
+  color: grey;
+}
+
+.profile {
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+form {
+  margin-top: 50px;
+}
+
+.feedback-input {
+  color: white;
+  font-weight: 500;
+  font-size: 18px;
+  border-radius: 5px;
+  line-height: 22px;
+  background-color: transparent;
+  border: 2px solid #3586ff;
+  transition: all 0.3s;
+  padding: 13px;
+  margin-bottom: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: 0;
+}
+
+.feedback-input:focus {
+  border: 2px solid #3586ff;
+}
+
+textarea {
+  height: 150px;
+  line-height: 150%;
+  resize: vertical;
+}
+
+[type="submit"] {
+  width: 100%;
+  background: #3586ff;
+  border-radius: 5px;
+  border: 0;
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  transition: all 0.3s;
+  margin-top: -4px;
+  font-weight: 700;
+}
+
+[type="submit"]:hover {
+  background: #3586ff;
+}
+
+:root {
+  color-scheme: light dark;
+}
+
+.home-page {
+  margin: 0;
+  font-family: "Product Sans", "Segoe UI", Roboto, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at top, #fefefe 0%, #f3f7ff 40%, #dde8ff 100%);
+}
+
+.home-page .page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 16px 120px;
+}
+
+.home-page .logo {
+  display: flex;
+  gap: 4px;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+  text-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.home-page .logo span {
+  display: inline-block;
+  animation: float 4s ease-in-out infinite;
+  color: #000000;
+}
+
+.home-page .logo span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.home-page .logo span:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.home-page .logo span:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.home-page .logo span:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.home-page .logo span:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  25% {
+    transform: translateY(-4px);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+
+  75% {
+    transform: translateY(-2px);
+  }
+}
+
+.home-page .search {
+  width: min(600px, 95vw);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  box-shadow: 0 8px 30px rgba(10, 50, 130, 0.18);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-page .search:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(10, 50, 130, 0.22);
+}
+
+.home-page .search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 1.1rem;
+  padding: 6px 0;
+  color: #202124;
+  outline: none;
+}
+
+.home-page .search input::placeholder {
+  color: #8a9099;
+}
+
+/* search button at home page */
+.home-page .search button {
+  width: auto;
+  font-size: 1rem;
+  padding: 6px 16px;
+  border: none;
+  background: linear-gradient(135deg, #0056d6, #5b2ca2);
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-page footer {
+  text-align: center;
+  padding: 24px 16px;
+  font-size: 0.85rem;
+  color: #5f6368;
+}
+
+.home-page .version {
+  margin-top: 8px;
+  font-size: 0.75rem;
+  color: #8a9099;
+}
+
+@media (max-width: 480px) {
+  .home-page .logo {
+    letter-spacing: -1px;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .home-page .search button {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+  }
+}
+
+.header-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  padding: 8px 14px;
+  box-shadow: 0 8px 24px rgba(130, 10, 104, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.header-search:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(10, 50, 130, 0.22);
+}
+
+.header-search input {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  padding: 4px 0;
+  color: #202124;
+  outline: none;
+}
+
+.header-search input::placeholder {
+  color: #8a9099;
+}
+
+.header-search button {
+  border: none;
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #0056d6, #5b2ca2);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }

@@ -1,6 +1,20 @@
 <%# Version: 0.001 (2025-09-30) %>
 <%- include("partials/header.ejs") %>
 
+  <div class="header__center">
+    <form class="search" action="/results" method="get">
+      <input id="headerSearchInput" name="q" type="text" aria-label="Search for BJJ video" placeholder="Search" autocomplete="on" />
+      <button class="search__submit" type="submit" aria-label="Search">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+    <button class="header__icon header__mic" type="button" aria-label="Stemmesøgning">
+      <i class="fas fa-microphone"></i>
+    </button>
+  </div>
+
+
+
 <h1>Om Mig</h1>
 <img class="profile" src="images/AnimeProfil.png" alt="cat profile">
 
@@ -36,7 +50,6 @@ Kort sagt: Jeg brænder for at kombinere passionen for BJJ, musik og teknologi �
 <br>
 <br>
 <br>
-
 
     <%- include("partials/footer.ejs") %>
 
