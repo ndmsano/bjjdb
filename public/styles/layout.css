@@ -109,10 +109,6 @@ i {
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.search__submit:hover {
-  background: rgba(37, 99, 235, 0.18);
-  transform: scale(1.05);
-}
 
 .header__mic {
   background: rgba(15, 23, 42, 0.06);
@@ -142,35 +138,11 @@ i {
   justify-content: center;
 }
 
-@media (max-width: 900px) {
-  .header__center {
-    gap: 8px;
-  }
 
-  .search {
-    width: min(50px, 70vw);
-  }
-
-  .header__right {
-    gap: 8px;
-  }
-}
 
 @media (max-width: 900px) and (min-width: 641px) {
-  .search__submit {
-    border: none;
-    background: rgba(148, 163, 184, 0.15);
-    color: #0f172a;
-    width: 36px;
-    height: 36px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 999px;
-    transition: background 0.2s ease, transform 0.2s ease;
+  .search {
+    width: 100%;
   }
 }
 
@@ -404,8 +376,7 @@ textarea {
 }
 
 [type="submit"] {
-  width: 100%;
-  background: #3586ff;
+  width: 15%;
   border-radius: 5px;
   border: 0;
   cursor: pointer;
@@ -416,10 +387,6 @@ textarea {
   transition: all 0.3s;
   margin-top: -4px;
   font-weight: 700;
-}
-
-[type="submit"]:hover {
-  background: #3586ff;
 }
 
 :root {
@@ -435,6 +402,7 @@ textarea {
   background: radial-gradient(circle at top, #fefefe 0%, #f3f7ff 40%, #dde8ff 100%);
 }
 
+/*Vigtig homepage*/
 .home-page .page {
   flex: 1;
   display: flex;
@@ -480,6 +448,7 @@ textarea {
   animation-delay: 0.4s;
 }
 
+/*Defines the CSS animation of the BJJDB letters*/
 @keyframes float {
   0%,
   100% {
@@ -511,32 +480,18 @@ textarea {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.home-page .search:focus-within {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 40px rgba(10, 50, 130, 0.22);
-}
-
-.home-page .search input {
-  flex: 1;
-  border: none;
-  background: transparent;
-  font-size: 1.1rem;
-  padding: 6px 0;
-  color: #202124;
-  outline: none;
-}
-
+/*farven på preudfyldte tekst i homepage search input felt*/
 .home-page .search input::placeholder {
-  color: #8a9099;
+  color: #7a7777;
 }
 
-/* search button at home page */
+/* search button at home page - dette styrer den blå knap */
 .home-page .search button {
   width: auto;
   font-size: 1rem;
   padding: 6px 16px;
   border: none;
-  background: linear-gradient(135deg, #0056d6, #5b2ca2);
+  background: linear-gradient(135deg, #d6000000, #100000);
   color: #fff;
   border-radius: 999px;
   font-weight: 600;
@@ -557,55 +512,8 @@ textarea {
   color: #8a9099;
 }
 
+
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><*/
 @media (max-width: 480px) {
-  .home-page .logo {
-    letter-spacing: -1px;
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-
-  .home-page .search button {
-    padding: 8px 14px;
-    font-size: 0.9rem;
-  }
-}
-
-.header-search {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 999px;
-  padding: 8px 14px;
-  box-shadow: 0 8px 24px rgba(130, 10, 104, 0.18);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.header-search:focus-within {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 32px rgba(10, 50, 130, 0.22);
-}
-
-.header-search input {
-  border: none;
-  background: transparent;
-  font-size: 1rem;
-  padding: 4px 0;
-  color: #202124;
-  outline: none;
-}
-
-.header-search input::placeholder {
-  color: #8a9099;
-}
-
-.header-search button {
-  border: none;
-  border-radius: 999px;
-  padding: 6px 16px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  background: linear-gradient(135deg, #0056d6, #5b2ca2);
-  color: #fff;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
