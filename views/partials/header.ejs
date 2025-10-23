@@ -10,6 +10,8 @@
   <title>BJJDB</title>
 </head>
 
+<% const showHeaderSearch = !(typeof hideHeaderSearch !== "undefined" && hideHeaderSearch); %>
+
 <header class="header">
   <div class="header__left">
     <button class="header__icon header__menu" type="button" aria-label="Åbn menu">
@@ -21,15 +23,15 @@
   </div>
 
   <div class="header__center">
-    <form class="search" action="/results" method="get">
-      <input id="headerSearchInput" name="q" type="text" aria-label="Search for BJJ video" placeholder="Search" autocomplete="on" />
-      <button class="search__submit" type="submit" aria-label="Search">
-        <i class="fas fa-search"></i>
-      </button>
-    </form>
-    <button class="header__icon header__mic" type="button" aria-label="Stemmesøgning">
-      <i class="fas fa-microphone"></i>
-    </button>
+    <% if (showHeaderSearch) { %>
+      <form class="search" action="/results" method="get">
+        <input id="headerSearchInput" name="q" type="text" aria-label="Search for BJJ video" placeholder="Search" autocomplete="on" />
+        <button class="search__submit" type="submit" aria-label="Search">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    <% } %>
+    
   </div>
 
   <div class="header__right">
