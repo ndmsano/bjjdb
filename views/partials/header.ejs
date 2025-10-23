@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css">
   <link rel="stylesheet" href="/styles/layout.css">
+  <link rel="stylesheet" href="/styles/header-footer.css">
   <title>BJJDB</title>
 </head>
 
@@ -25,7 +26,7 @@
   <div class="header__center">
     <% if (showHeaderSearch) { %>
       <form class="search" action="/results" method="get">
-        <input id="headerSearchInput" name="q" type="text" aria-label="Search for BJJ video" placeholder="Search" autocomplete="on" />
+        <input id="headerSearchInput" name="q" type="text" aria-label="Search for BJJ video" placeholder="Search" autocomplete="on" value="<%= typeof query !== 'undefined' ? query : '' %>" />
         <button class="search__submit" type="submit" aria-label="Search">
           <i class="fas fa-search"></i>
         </button>
