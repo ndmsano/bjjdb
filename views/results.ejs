@@ -101,7 +101,7 @@
   }
 
   .result-card__title a {
-    color: inherit;
+    color: black;
     text-decoration: none;
   }
 
@@ -111,8 +111,8 @@
 
   .result-card__meta {
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
+    flex-direction: column;
+    gap: 6px;
     font-size: 0.85rem;
     color: #64748b;
   }
@@ -232,10 +232,11 @@
     function buildCard(entry) {
       const id = entry.id ?? "";
       const title = escapeHtml(entry.Name || entry.Name_clean || "Uden titel");
-      const language = entry.Language ? `🌐 ${escapeHtml(entry.Language)}` : "";
-      const type = entry.Glossary_Type ? `🏷️ ${escapeHtml(entry.Glossary_Type)}` : "";
-      const created = formatDate(entry.created_at);
-      const createdLabel = created ? `🕒 ${created}` : "";
+      const languageValue = entry.Language ? escapeHtml(entry.Language) : "";
+      const typeValue = entry.Glossary_Type ? escapeHtml(entry.Glossary_Type) : "";
+      const createdValue = formatDate(entry.created_at);
+      const ratingValue = entry.Rating ?? entry.rating ?? null;
+      const instructorValue = entry.Instructor ?? entry.instructor ?? "";
       const comment = entry.Comments ? escapeHtml(entry.Comments) : "";
       const synonyms = Array.isArray(entry.Synonyms) ? entry.Synonyms.slice(0, 6) : [];
       const youtubeId = extractYoutubeId(entry.Link);
@@ -248,7 +249,12 @@
         .map((tag) => `<span class="result-card__tag">#${escapeHtml(tag)}</span>`)
         .join("\n");
 
-      const metaItems = [language, type, createdLabel].filter(Boolean).join("");
+      const metaLines = [
+        `Language: ${languageValue || "—"}`,
+        `Synonyms: ${synonyms.length ? synonyms.map((tag) => escapeHtml(tag)).join(", ") : "—"}`,
+        `Rating: ${ratingValue !== null && ratingValue !== undefined ? escapeHtml(String(ratingValue)) : "—"}`,
+        `Instructor: ${instructorValue ? escapeHtml(String(instructorValue)) : "—"}`
+      ];
 
       return `
         <article class="result-card" data-id="${escapeHtml(id)}">
@@ -263,7 +269,9 @@
               <a href="${escapeHtml(videoUrl)}" target="_blank" rel="noopener">${title}</a>
             </h2>
 
-            <div class="result-card__meta">${metaItems || ""}</div>
+            <div class="result-card__meta">
+              ${metaLines.map((line) => `<div>${line}</div>`).join("")}
+            </div>
 
             ${comment ? `<p class="result-card__description">${comment}</p>` : ""}
 

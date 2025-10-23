@@ -66,35 +66,7 @@
   margin-top: 0;
 }
 
-.search input {
-  flex: 1;
-  border: none;
-  background: transparent;
-  padding: 0 16px;
-  font-size: 1rem;
-  color: #0f172a;
-  outline: none;
-}
 
-.search input::placeholder {
-  color: #94a3b8;
-}
-
-.search__submit {
-  border: none;
-  background: rgba(148, 163, 184, 0.15);
-  color: #0f172a;
-  width: 36px;
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 999px;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
 
 .header__right {
   gap: 12px;
@@ -283,8 +255,3 @@ footer .wave#wave4 {
   color: #5f6368;
 }
 
-.home-page .version {
-  margin-top: 8px;
-  font-size: 0.75rem;
-  color: #8a9099;
-}
